@@ -1,0 +1,4 @@
+requests
+langdetect
+geopy
+streamlit
