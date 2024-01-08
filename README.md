@@ -2,7 +2,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
 [![Python Version](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/downloads/)
 
-A nice and cool web app powered by [Streamlit](https://streamlit.io/) for comparing a product being sold on multiple Wolt venues.
+A nice and cool web app powered by [Streamlit](https://streamlit.io/) for comparing a product being sold on multiple Wolt venues. Check it out [ONLINE!](https://awesome-wolt-comparer.streamlit.app/) 🤩
 
 ## Overview
 
