@@ -20,6 +20,11 @@ product = col1.text_input(
     "Product to Search (עברית זה גם בסדר😄)",
     key="product",
 )
+only_open_now = col1.toggle(
+    "Show Only Venues That Open Now",
+    key="only_open_now",
+    value=True
+)
 
 form.form_submit_button(label="Submit")
 
@@ -28,7 +33,7 @@ with st.spinner("Searching and comparing... (may take up to a minute)"):
     if address != '' and product != '':
         lat, lon = wc.get_lon_lat_from_address(address)
         product_name = product
-        results, avg_price = wc.get_results(product_name, lat, lon)
+        results, avg_price = wc.get_results(product_name, lat, lon, only_open_now)
         avg_price = floor(avg_price)
         row_size = 2
         if len(results) == 0:

@@ -38,7 +38,7 @@ def get_lon_lat_from_address(address):
 
 
 # Search all venues that sell the desired product
-def get_venues_by_product(product_name, lat, lon):
+def get_venues_by_product(product_name, lat, lon, only_open_now):
     payload = {}
     headers = {"Platform": "Web"}
     params = {"q": product_name, "target": "venues", "lat": lat, "lon": lon}
@@ -51,10 +51,14 @@ def get_venues_by_product(product_name, lat, lon):
         response = json.loads(response.text)
 
         venues = response['sections'][0]['items']
-        venues = list(filter(lambda v: "overlay" not in v.keys(), venues))
+        if only_open_now:
+            venues = list(filter(lambda v: "overlay" not in v.keys(), venues))
+        else:
+            venues = list(filter(lambda v: "overlay" not in v.keys() or
+                                           v['overlay'] != 'Not delivering to your location', venues))
 
-        venues = [{'title': r['title'], 'track_id': r['track_id'].split('venue-')[1], "link": r["link"]["target"]} for r
-                  in venues]
+        venues = [{'title': r['title'], 'track_id': r['track_id'].split('venue-')[1],
+                   "link": r["link"]["target"]} for r in venues]
 
     except KeyError as e:
         print(f'[!] Error in get_venues_by_product: {str(e)}')
@@ -94,11 +98,11 @@ def get_product_from_venue(track_id, product_name):
 
 
 # Main function
-def get_results(product_name, lat, lon):
+def get_results(product_name, lat, lon, only_open_now):
     options_to_compare = []
     avg_price = 0
 
-    venues = get_venues_by_product(product_name, lat, lon)
+    venues = get_venues_by_product(product_name, lat, lon, only_open_now)
     if len(venues) == 0:
         return [], 0
 
